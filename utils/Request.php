@@ -1,6 +1,3 @@
-/**
-* utils/Request.php - Handle HTTP requests
-*/
 <?php
 
 namespace Utils;

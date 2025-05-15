@@ -1,1 +1,29 @@
-/Api/.env
+# Composer dependencies
+/vendor/
+
+# Environment files
+.env
+
+# IDE files
+/.idea/
+/*.sublime-workspace
+/*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PHPUnit
+.phpunit.result.cache
+
+# Logs
+*.log
+
+# Cache
+/cache/
+/tmp/
+/storage/*.key
+
+# User uploaded files (if any)
+/uploads/
+/public/uploads/

@@ -9,7 +9,7 @@ define('ROOT_DIR', __DIR__);
 spl_autoload_register(function ($className) {
     // Convert namespace to file path
     $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-    $className = str_replace('Api' . DIRECTORY_SEPARATOR, '', $className);
+    $className = str_replace(DIRECTORY_SEPARATOR, '', $className);
 
     $file = ROOT_DIR . DIRECTORY_SEPARATOR . $className . '.php';
 

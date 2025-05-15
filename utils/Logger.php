@@ -15,11 +15,11 @@ class Logger
 
     private function __construct()
     {
-        if (!is_dir(Config::LOG_PATH)) {
-            mkdir(Config::LOG_PATH, 0777, true);
+        if (!is_dir(Config::getLogPath())) {
+            mkdir(Config::getLogPath(), 0777, true);
         }
 
-        $this->logFile = Config::LOG_PATH . '/app-' . date('Y-m-d') . '.log';
+        $this->logFile = Config::getLogPath() . '/app-' . date('Y-m-d') . '.log';
     }
 
     public static function getInstance()
@@ -40,7 +40,7 @@ class Logger
         ];
 
         // Check if the log level is sufficient
-        if ($logLevels[$level] < $logLevels[Config::LOG_LEVEL]) {
+        if ($logLevels[$level] < $logLevels[Config::getLogLevel()]) {
             return;
         }
 

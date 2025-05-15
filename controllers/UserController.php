@@ -1,6 +1,3 @@
-/**
-* controllers/UserController.php - User controller
-*/
 <?php
 
 namespace Controllers;

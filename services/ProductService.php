@@ -1,19 +1,20 @@
-/**
-* services/ProductService.php - Product service layer
-*/
 <?php
 
 namespace Services;
 
-use Models\Product;
+require_once __DIR__ . '/../models/Product.php';
+// Adjust the namespace below if your Product model uses a different namespace
+use Product;
 
 class ProductService
 {
     private $productModel;
+    private $db;
 
     public function __construct()
     {
-        $this->productModel = new Product();
+        $this->db = \Database::getInstance()->getConnection();
+        $this->productModel = new Product($this->db);
     }
 
     public function getAllProducts()

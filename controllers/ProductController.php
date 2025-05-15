@@ -1,6 +1,3 @@
-/**
-* controllers/ProductController.php - Product controller
-*/
 <?php
 
 namespace Controllers;

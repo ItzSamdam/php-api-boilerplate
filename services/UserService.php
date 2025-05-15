@@ -1,20 +1,21 @@
-/**
-* services/UserService.php - User service layer
-*/
 <?php
 
 namespace Services;
 
-use Models\User;
+require_once __DIR__ . '/../models/User.php';
+
 use Config\Config;
+use User;
 
 class UserService
 {
     private $userModel;
+    private $db;
 
     public function __construct()
     {
-        $this->userModel = new User();
+        $this->db = \Database::getInstance()->getConnection();
+        $this->userModel = new User($this->db);
     }
 
     public function getAllUsers()
@@ -64,13 +65,13 @@ class UserService
             'name' => $user['name'],
             'email' => $user['email'],
             'iat' => time(),
-            'exp' => time() + Config::JWT_EXPIRATION
+            'exp' => time() + Config::getJwtExpiration()
         ];
 
         // In a real application, you would use a proper JWT library
         $header = base64_encode(json_encode(['typ' => 'JWT', 'alg' => 'HS256']));
         $payloadEncoded = base64_encode(json_encode($payload));
-        $signature = hash_hmac('sha256', "$header.$payloadEncoded", Config::JWT_SECRET, true);
+        $signature = hash_hmac('sha256', "$header.$payloadEncoded", Config::getJwtSecret(), true);
         $signatureEncoded = base64_encode($signature);
 
         $token = "$header.$payloadEncoded.$signatureEncoded";
@@ -82,7 +83,7 @@ class UserService
                 'email' => $user['email']
             ],
             'token' => $token,
-            'expires_in' => Config::JWT_EXPIRATION
+            'expires_in' => Config::getJwtExpiration()
         ];
     }
 }

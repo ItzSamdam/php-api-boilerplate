@@ -5,9 +5,7 @@
 
 <?php
 
-namespace Models;
-
-use Config\Database;
+require_once __DIR__ . '/../config/Database.php';
 
 class Product
 {
@@ -16,7 +14,7 @@ class Product
 
     public function __construct()
     {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = \Database::getInstance()->getConnection();
     }
 
     public function findAll()

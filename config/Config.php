@@ -1,7 +1,3 @@
-/**
-* config/Config.php - Application configuration
-*/
-
 <?php
 
 namespace Config;

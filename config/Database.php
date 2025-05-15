@@ -1,12 +1,6 @@
-**
-* config/Database.php - Database connection
-*/
-
-
 <?php
 
-namespace Config;
-
+use Config\Config;
 class Database
 {
     private static $instance = null;
@@ -16,10 +10,14 @@ class Database
     {
         try {
             $this->connection = new \PDO(
-                'mysql:host=' . Config::DB_HOST . ';dbname=' . Config::DB_NAME,
-                Config::DB_USER,
-                Config::DB_PASS,
-                [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]
+                'mysql:host=' . Config::getDbHost() . ';dbname=' . Config::getDbName(),
+                Config::getDbUser(),
+                Config::getDbPass(),
+                [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                    \PDO::ATTR_EMULATE_PREPARES => false,
+                ]   
             );
         } catch (\PDOException $e) {
             throw new \Exception("Database connection failed: " . $e->getMessage());

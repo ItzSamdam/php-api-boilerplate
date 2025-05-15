@@ -1,11 +1,10 @@
-/**
-* utils/Response.php - Handle HTTP responses
-*/
-
-
 <?php
 
 namespace Utils;
+
+/**
+ * utils/Response.php - Handle HTTP responses
+ */
 
 class Response
 {
