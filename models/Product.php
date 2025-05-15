@@ -1,8 +1,3 @@
-/**
-* models/Product.php - Product model
-*/
-
-
 <?php
 
 require_once __DIR__ . '/../config/Database.php';
