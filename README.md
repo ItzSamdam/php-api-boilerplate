@@ -53,7 +53,7 @@ api/
 
 1. **Clone the repository**
 2. **Configure your database in `config/Database.php`**
-3. **Set up your web server to point to `api/index.php`**
+3. **Set up your web server to point to `/index.php`**
 4. **Start building your API endpoints in the `controllers` and `routes` folders**
 
 ## License
