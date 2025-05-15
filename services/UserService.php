@@ -26,8 +26,6 @@ class UserService
         return $response;
     }
 
-
-
     public function getUserById($id)
     {
         return $this->userModel->findById($id);

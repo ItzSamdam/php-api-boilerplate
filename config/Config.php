@@ -72,6 +72,53 @@ class Config
     {
         return self::$env['LOG_LEVEL'] ?? 'debug';
     }
+
+    // mailer configuration
+    public static function getSmtpServer()
+    {
+        return self::$env['SMTP_SERVER'] ?? 'smtp.example.com';
+    }
+
+    public static function getSmtpPort()
+    {
+        return self::$env['SMTP_PORT'] ?? 587;
+    }
+
+    public static function getSmtpUsername()
+    {
+        return self::$env['SMTP_USERNAME'] ?? null;
+    }
+
+    public static function getSmtpPassword()
+    {
+        return self::$env['SMTP_PASSWORD'] ?? null;
+    }
+
+    public static function getSmtpFromAddress()
+    {
+        return self::$env['SMTP_FROM_ADDRESS'] ?? null;
+    }
+
+    public static function getSmtpFromName()
+    {
+        return self::$env['SMTP_FROM_NAME'] ?? 'Default Sender';
+    }
+
+    // cloudinary configuration
+    public static function getCloudName()
+    {
+        return self::$env['CLOUD_NAME'] ?? null;
+    }
+
+    public static function getCloudApiKey()
+    {
+        return self::$env['CLOUD_API_KEY'] ?? null;
+    }
+
+    public static function getCloudApiSecret()
+    {
+        return self::$env['CLOUD_API_SECRET'] ?? null;
+    }
 }
 
 // Load environment variables
