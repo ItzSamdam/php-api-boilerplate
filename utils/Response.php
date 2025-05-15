@@ -26,7 +26,19 @@ class Response
         ], $statusCode);
     }
 
-    public static function error($message, $statusCode = 400, $errors = [])
+    public static function defaultResponse($statusCode = 200)
+    {
+        return self::json([
+            'status' => 'success',
+            'message' => '🚀 PHP-API-BOILERPLATE 🚀',
+            'version' => '1.0.0',
+            'author' => '👤 Samuel Owadayo',
+            'email' => 'odevservices@gmail.com',
+            'copyright' => '©2025 Samuel Owadayo',
+        ], $statusCode);
+    }
+
+    public static function error($message, $statusCode = 400, $errors = null)
     {
         return self::json([
             'status' => 'error',

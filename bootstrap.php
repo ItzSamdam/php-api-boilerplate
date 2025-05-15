@@ -1,6 +1,3 @@
-/**
-* bootstrap.php - Initialize the application
-*/
 <?php
 // Define the root directory
 define('ROOT_DIR', __DIR__);

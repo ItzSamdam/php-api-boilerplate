@@ -2,6 +2,9 @@
 
 namespace Config;
 
+// Load Composer's autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use Dotenv\Dotenv;
 
 class Config
@@ -11,7 +14,12 @@ class Config
     public static function loadEnv()
     {
         if (!self::$env) {
-            $dotenv = Dotenv::createImmutable(__DIR__);
+            // Load environment variables from .env file
+            $envPath = __DIR__ . '/../.env';
+            if (!file_exists($envPath)) {
+                throw new \Exception('Environment file not found.');
+            }
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
             $dotenv->load();
             self::$env = $_ENV;
         }

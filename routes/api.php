@@ -1,12 +1,12 @@
-/**
-* routes/api.php - Define API routes
-*/
 <?php
 
 use Controllers\UserController;
 use Controllers\ProductController;
+use Controllers\DefaultController;
 use Middleware\AuthMiddleware;
 
+$router->get('/', [DefaultController::class, 'index']);
+$router->get('/api/v1', [DefaultController::class, 'index']);
 // User routes
 $router->get('/api/v1/users', [UserController::class, 'index']);
 $router->get('/api/v1/users/{id}', [UserController::class, 'show']);
