@@ -1,11 +1,6 @@
-/**
-* utils/Validator.php - Data validation utility
-*/
-
-
 <?php
 
-namespace Api\Utils;
+namespace Utils;
 
 class Validator
 {
