@@ -5,6 +5,7 @@ namespace Services;
 require_once __DIR__ . '/../models/User.php';
 
 use Config\Config;
+use Utils\Paginator;
 use User;
 
 class UserService
@@ -18,10 +19,14 @@ class UserService
         $this->userModel = new User($this->db);
     }
 
-    public function getAllUsers()
-    {
-        return $this->userModel->findAll();
+    public function getAllUsers($page, $default)
+    {       
+        $data = $this->userModel->findAll();
+        $response = new Paginator($data, $default, $page);
+        return $response;
     }
+
+
 
     public function getUserById($id)
     {

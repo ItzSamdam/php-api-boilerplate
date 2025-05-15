@@ -18,8 +18,14 @@ class UserController
 
     public function index(Request $request)
     {
-        $users = $this->userService->getAllUsers();
-        return Response::success($users);
+        $currentPage = intval($request->getQueryParam('page') ?? 1); // Get 'page' from request or default to page 1
+        $itemPerPage = intval($request->getQueryParam('itemsPerPage') ?? 10); // Get 'itemsPerPage' from request or default to 1
+        $users = $this->userService->getAllUsers($currentPage, $itemPerPage);
+        return Response::success([
+            'current_page' => $users->getCurrentPage(),
+            'total_pages' => $users->getTotalPages(),
+            'items' => $users->getPageData()
+        ]);
     }
 
     public function show(Request $request, $params)

@@ -91,6 +91,11 @@ class Request
         return $this->params;
     }
 
+    public function getQueryParam($key, $default = null)
+    {
+        return $_GET[$key] ?? $default;
+    }
+
     public function getParam($key, $default = null)
     {
         return $this->params[$key] ?? $default;
