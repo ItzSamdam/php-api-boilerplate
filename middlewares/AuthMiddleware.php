@@ -1,13 +1,9 @@
-/**
-* middleware/AuthMiddleware.php - Authentication middleware
-*/
 <?php
 
 namespace Middleware;
 
 use Utils\Request;
 use Utils\Response;
-use Config\Config;
 
 class AuthMiddleware
 {

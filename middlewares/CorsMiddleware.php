@@ -1,6 +1,3 @@
-/**
-* middleware/CorsMiddleware.php - CORS middleware
-*/
 <?php
 
 namespace Middleware;
