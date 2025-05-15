@@ -1,14 +1,12 @@
-/**
-* routes/Router.php - Handle routing
-*/
-
-
 <?php
 
-namespace Api\Routes;
+namespace Routes;
 
-use Api\Utils\Request;
-use Api\Utils\Response;
+require_once __DIR__ . '/../Utils/Response.php';
+require_once __DIR__ . '/../Utils/Request.php';
+
+use Utils\Request;
+use Utils\Response;
 
 class Router
 {

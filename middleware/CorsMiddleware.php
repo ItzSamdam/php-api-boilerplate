@@ -1,9 +1,6 @@
-/**
-* middleware/CorsMiddleware.php - CORS middleware
-*/
 <?php
 
-namespace Api\Middleware;
+namespace Middleware;
 
 class CorsMiddleware
 {
