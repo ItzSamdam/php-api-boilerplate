@@ -22,6 +22,7 @@ class Response
         return self::json([
             'status' => 'success',
             'message' => $message,
+            'errors' => null,
             'data' => $data
         ], $statusCode);
     }
@@ -31,7 +32,8 @@ class Response
         return self::json([
             'status' => 'error',
             'message' => $message,
-            'errors' => $errors
+            'errors' => $errors,
+            'data' => null
         ], $statusCode);
     }
 
@@ -45,9 +47,14 @@ class Response
         return self::error($message, 401);
     }
 
-    public static function forbidden($message = 'Forbidden')
+    public static function forbidden($message = 'Access Forbidden')
     {
         return self::error($message, 403);
+    }
+
+    public static function serverError($message = 'Internal Server Error')
+    {
+        return self::error($message, 500);
     }
 
     public static function validationError($errors)

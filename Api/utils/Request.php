@@ -1,7 +1,6 @@
 /**
 * utils/Request.php - Handle HTTP requests
 */
-
 <?php
 
 namespace Api\Utils;
@@ -17,13 +16,13 @@ class Request
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->path = $this->getPath();
-        $this->params = $this->getParams();
-        $this->body = $this->getBody();
-        $this->headers = $this->getHeaders();
+        $this->path = $this->parsePath();
+        $this->params = $this->parseParams();
+        $this->body = $this->parseBody();
+        $this->headers = $this->parseHeaders();
     }
 
-    private function getPath()
+    private function parsePath()
     {
         $path = $_SERVER['REQUEST_URI'];
         $position = strpos($path, '?');
@@ -35,7 +34,7 @@ class Request
         return $path;
     }
 
-    private function getParams()
+    private function parseParams()
     {
         $params = [];
 
@@ -48,7 +47,7 @@ class Request
         return $params;
     }
 
-    private function getBody()
+    private function parseBody()
     {
         $body = [];
 
@@ -66,7 +65,7 @@ class Request
         return $body;
     }
 
-    private function getHeaders()
+    private function parseHeaders()
     {
         $headers = [];
 
