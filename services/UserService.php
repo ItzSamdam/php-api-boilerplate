@@ -6,6 +6,7 @@ require_once __DIR__ . '/../models/User.php';
 
 use Config\Config;
 use Utils\Paginator;
+use Utils\TokenService;
 use User;
 
 class UserService
@@ -61,23 +62,14 @@ class UserService
         if (!$user || !password_verify($password, $user['password'])) {
             return false;
         }
-
-        // Create JWT token (simplified example)
-        $payload = [
-            'sub' => $user['id'],
+        $other_info = [
             'name' => $user['name'],
             'email' => $user['email'],
-            'iat' => time(),
-            'exp' => time() + Config::getJwtExpiration()
+            'verified' => $user['verified'],
+            'role' => $user['role'],
+            // other need info as required
         ];
-
-        // In a real application, you would use a proper JWT library
-        $header = base64_encode(json_encode(['typ' => 'JWT', 'alg' => 'HS256']));
-        $payloadEncoded = base64_encode(json_encode($payload));
-        $signature = hash_hmac('sha256', "$header.$payloadEncoded", Config::getJwtSecret(), true);
-        $signatureEncoded = base64_encode($signature);
-
-        $token = "$header.$payloadEncoded.$signatureEncoded";
+        $token = TokenService::issueTokens($this->db, $user['id'], $other_info);
 
         return [
             'user' => [
