@@ -26,12 +26,12 @@ class Response
         ], $statusCode);
     }
 
-    public static function defaultResponse($statusCode = 200)
+    public static function defaultResponse($statusCode = 200, $message = '🚀 PHP-API-BOILERPLATE 🚀', $version = '1.0.0')
     {
         return self::json([
             'status' => 'success',
-            'message' => '🚀 PHP-API-BOILERPLATE 🚀',
-            'version' => '1.0.0',
+            'message' => $message,
+            'version' => $version,
             'author' => '👤 Samuel Owadayo',
             'email' => 'odevservices@gmail.com',
             'copyright' => '©2025 Samuel Owadayo',
@@ -48,22 +48,22 @@ class Response
         ], $statusCode);
     }
 
-    public static function notFound($message = 'Resource not found')
+    public static function notFound($message = 'Resource not found. Please check the URL')
     {
         return self::error($message, 404);
     }
 
-    public static function unauthorized($message = 'Unauthorized')
+    public static function unauthorized($message = 'Unauthorized. Please login')
     {
         return self::error($message, 401);
     }
 
-    public static function forbidden($message = 'Access Forbidden')
+    public static function forbidden($message = 'Access Forbidden. You do not have permission to access this resource')
     {
         return self::error($message, 403);
     }
 
-    public static function serverError($message = 'Internal Server Error')
+    public static function serverError($message = 'Internal Server Error. Please try again later')
     {
         return self::error($message, 500);
     }
