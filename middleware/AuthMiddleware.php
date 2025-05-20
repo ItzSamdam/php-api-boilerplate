@@ -2,39 +2,37 @@
 
 namespace Middleware;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Utils\Request;
 use Utils\Response;
+use Config\Config;
 
 class AuthMiddleware
 {
+
     public function handle(Request $request)
     {
         $authHeader = $request->getAuthorizationHeader();
 
         if (empty($authHeader) || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             Response::unauthorized('No token provided');
+            return;
         }
 
         $token = $matches[1];
 
-        // Verify JWT token (simplified example)
         try {
-            // In a real application, you would use a proper JWT library
-            $tokenParts = explode('.', $token);
+            // Decode and verify the JWT token
+            $payload = JWT::decode($token, new Key(Config::getJwtSecret(), 'HS256'));
 
-            if (count($tokenParts) !== 3) {
-                Response::unauthorized('Invalid token format');
-            }
-
-            $payload = json_decode(base64_decode($tokenParts[1]), true);
-
-            if (!$payload || !isset($payload['exp']) || $payload['exp'] < time()) {
+            if (!$payload || !isset($payload->exp) || $payload->exp < time()) {
                 Response::unauthorized('Token has expired');
+                return;
             }
 
             // Store user ID in request for controllers to use
-            // In a real application, you would properly verify the signature
-            $_REQUEST['userId'] = $payload['sub'];
+            $_REQUEST['userId'] = $payload->sub;
         } catch (\Exception $e) {
             Response::unauthorized('Invalid token');
         }

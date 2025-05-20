@@ -40,13 +40,14 @@ class User
         $now = date('Y-m-d H:i:s');
 
         $stmt = $this->db->prepare("
-            INSERT INTO {$this->table} (name, email, password, created_at, updated_at)
-            VALUES (:name, :email, :password, :created_at, :updated_at)
+            INSERT INTO {$this->table} (name, email, password, token_version, created_at, updated_at)
+            VALUES (:name, :email, :password, :token_version, :created_at, :updated_at)
         ");
 
         $stmt->bindParam(':name', $data['name']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', $data['password']);
+        $stmt->bindParam(':token_version', 0); // Default token version
         $stmt->bindParam(':created_at', $now);
         $stmt->bindParam(':updated_at', $now);
 
