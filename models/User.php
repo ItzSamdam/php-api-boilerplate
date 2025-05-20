@@ -41,7 +41,7 @@ class User
 
         $stmt = $this->db->prepare("
             INSERT INTO {$this->table} (name, email, password, token_version, created_at, updated_at)
-            VALUES (:name, :email, :password, :created_at, :updated_at)
+            VALUES (:name, :email, :password, :token_version, :created_at, :updated_at)
         ");
 
         $stmt->bindParam(':name', $data['name']);
