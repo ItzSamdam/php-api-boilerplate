@@ -5,7 +5,9 @@ require_once __DIR__ . '/../models/BaseModel.php';
 class User extends BaseModel
 {
     protected $table = 'users';
-    protected $fillable = ['name', 'email', 'password', 'token_version'];
+    protected $fillable = ['name', 'email', 'password', 'token_version'
+    // You can add more fields as needed, such as 'role', 'created_at', 'updated_at', etc.
+    ];
 
     // Custom finder: by email
     public function findByEmail($email)

@@ -14,6 +14,7 @@ abstract class BaseModel
         'where' => [],
         'order' => '',
         'limit' => '',
+        // You can add more query components like 'join', 'groupBy', etc. as needed
     ];
 
     public function __construct()
