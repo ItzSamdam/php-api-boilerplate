@@ -3,42 +3,34 @@
 namespace Services;
 
 require_once __DIR__ . '/../models/Product.php';
-// Adjust the namespace below if your Product model uses a different namespace
+
 use Product;
 
 class ProductService
 {
-    private $productModel;
-    private $db;
-
-    public function __construct()
-    {
-        $this->db = \Database::getInstance()->getConnection();
-        $this->productModel = new Product($this->db);
-    }
-
     public function getAllProducts()
     {
-        return $this->productModel->findAll();
+        // Using query builder
+        return Product::query()->get();
     }
 
     public function getProductById($id)
     {
-        return $this->productModel->findById($id);
+        return Product::query()->find($id);
     }
 
     public function createProduct($data)
     {
-        return $this->productModel->create($data);
+        return Product::query()->create($data);
     }
 
     public function updateProduct($id, $data)
     {
-        return $this->productModel->update($id, $data);
+        return Product::query()->update($id, $data);
     }
 
     public function deleteProduct($id)
     {
-        return $this->productModel->delete($id);
+        return Product::query()->delete($id);
     }
 }

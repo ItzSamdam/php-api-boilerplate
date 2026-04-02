@@ -11,65 +11,58 @@ use User;
 
 class UserService
 {
-    private $userModel;
-    private $db;
-
-    public function __construct()
-    {
-        $this->db = \Database::getInstance()->getConnection();
-        $this->userModel = new User($this->db);
-    }
-
     public function getAllUsers($page, $default)
-    {       
-        $data = $this->userModel->findAll();
-        $response = new Paginator($data, $default, $page);
-        return $response;
+    {
+        $data = User::query()->get();
+        return new Paginator($data, $default, $page);
     }
 
     public function getUserById($id)
     {
-        return $this->userModel->findById($id);
+        return User::query()->find($id);
     }
 
     public function createUser($data)
     {
-        // Hash password
+        // Hash password before saving
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['token_version'] = 0; // default
 
-        return $this->userModel->create($data);
+        return User::query()->create($data);
     }
 
     public function updateUser($id, $data)
     {
-        // Hash password if it exists
+        // Hash password if provided
         if (isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
 
-        return $this->userModel->update($id, $data);
+        return User::query()->update($id, $data);
     }
 
     public function deleteUser($id)
     {
-        return $this->userModel->delete($id);
+        return User::query()->delete($id);
     }
 
     public function login($email, $password)
     {
-        $user = $this->userModel->findByEmail($email);
+        $user = User::query()->findByEmail($email);
 
         if (!$user || !password_verify($password, $user['password'])) {
             return false;
         }
+
         $other_info = [
             'name' => $user['name'],
             'email' => $user['email'],
-            'verified' => $user['verified'],
-            'role' => $user['role'],
-            // other need info as required
+            'verified' => $user['verified'] ?? false,
+            'role' => $user['role'] ?? 'user',
+            // add other info as needed
         ];
-        $token = TokenService::issueTokens($this->db, $user['id'], $other_info);
+
+        $token = TokenService::issueTokens(\Database::getInstance()->getConnection(), $user['id'], $other_info);
 
         return [
             'user' => [

@@ -30,6 +30,7 @@ class AuthMiddleware
                 Response::unauthorized('Token has expired');
                 return;
             }
+            // You can also add additional checks here, such as verifying user roles or permissions
 
             // Store user ID in request for controllers to use
             $_REQUEST['userId'] = $payload->sub;

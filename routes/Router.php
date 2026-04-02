@@ -19,6 +19,8 @@ class Router
         'PATCH' => []
     ];
     private $middlewares = [];
+    private $notFoundHandler;
+    private $errorHandler;
 
     public function __construct(Request $request)
     {
@@ -67,61 +69,129 @@ class Router
         ];
     }
 
+    public function setNotFoundHandler(callable $handler)
+    {
+        $this->notFoundHandler = $handler;
+    }
+
+    public function setErrorHandler(callable $handler)
+    {
+        $this->errorHandler = $handler;
+    }
+
+    // public function resolve()
+    // {
+    //     $method = $this->request->getMethod();
+    //     $path = $this->request->getPath();
+
+    //     // Check if route exists
+    //     if (!isset($this->routes[$method])) {
+    //         return Response::notFound("Route method not supported");
+    //     }
+
+    //     $routeFound = false;
+    //     $params = [];
+
+    //     foreach ($this->routes[$method] as $routeRegex => $route) {
+    //         if (preg_match($routeRegex, $path, $matches)) {
+    //             $routeFound = true;
+
+    //             // Extract named parameters
+    //             foreach ($matches as $key => $value) {
+    //                 if (is_string($key)) {
+    //                     $params[$key] = $value;
+    //                 }
+    //             }
+
+    //             // Run middlewares
+    //             foreach ($route['middlewares'] as $middleware) {
+    //                 $instance = new $middleware();
+    //                 $instance->handle($this->request);
+    //             }
+
+    //             // Call route callback
+    //             $callback = $route['callback'];
+
+    //             if (is_array($callback)) {
+    //                 [$controller, $method] = $callback;
+
+    //                 if (is_string($controller)) {
+    //                     $controller = new $controller();
+    //                 }
+
+    //                 $response = $controller->{$method}($this->request, $params);
+    //                 return $response;
+    //             }
+
+    //             if (is_callable($callback)) {
+    //                 $response = call_user_func($callback, $this->request, $params);
+    //                 return $response;
+    //             }
+
+    //             break;
+    //         }
+    //     }
+
+    //     if (!$routeFound) {
+    //         return Response::notFound("Route not found");
+    //     }
+    // }
+
     public function resolve()
     {
         $method = $this->request->getMethod();
-        $path = $this->request->getPath();
+        $path   = $this->request->getPath();
 
-        // Check if route exists
-        if (!isset($this->routes[$method])) {
-            return Response::notFound("Route method not supported");
-        }
-
-        $routeFound = false;
-        $params = [];
-
-        foreach ($this->routes[$method] as $routeRegex => $route) {
-            if (preg_match($routeRegex, $path, $matches)) {
-                $routeFound = true;
-
-                // Extract named parameters
-                foreach ($matches as $key => $value) {
-                    if (is_string($key)) {
-                        $params[$key] = $value;
-                    }
-                }
-
-                // Run middlewares
-                foreach ($route['middlewares'] as $middleware) {
-                    $instance = new $middleware();
-                    $instance->handle($this->request);
-                }
-
-                // Call route callback
-                $callback = $route['callback'];
-
-                if (is_array($callback)) {
-                    [$controller, $method] = $callback;
-
-                    if (is_string($controller)) {
-                        $controller = new $controller();
-                    }
-
-                    $response = $controller->{$method}($this->request, $params);
-                    return $response;
-                }
-
-                if (is_callable($callback)) {
-                    $response = call_user_func($callback, $this->request, $params);
-                    return $response;
-                }
-
-                break;
+        try {
+            if (!isset($this->routes[$method])) {
+                return Response::notFound("Route method not supported");
             }
-        }
 
-        if (!$routeFound) {
-            return Response::notFound("Route not found");
+            $routeFound = false;
+            $params = [];
+
+            foreach ($this->routes[$method] as $routeRegex => $route) {
+                if (preg_match($routeRegex, $path, $matches)) {
+                    $routeFound = true;
+
+                    foreach ($matches as $key => $value) {
+                        if (is_string($key)) {
+                            $params[$key] = $value;
+                        }
+                    }
+
+                    foreach ($route['middlewares'] as $middleware) {
+                        $instance = new $middleware();
+                        $instance->handle($this->request);
+                    }
+
+                    $callback = $route['callback'];
+
+                    if (is_array($callback)) {
+                        [$controller, $method] = $callback;
+                        if (is_string($controller)) {
+                            $controller = new $controller();
+                        }
+                        return $controller->{$method}($this->request, $params);
+                    }
+
+                    if (is_callable($callback)) {
+                        return call_user_func($callback, $this->request, $params);
+                    }
+                }
+            }
+
+            if (!$routeFound) {
+                if ($this->notFoundHandler) {
+                    return call_user_func($this->notFoundHandler, $this->request);
+                }
+                return Response::notFound("Route not found");
+            }
+        } catch (\Throwable $e) {
+            if ($this->errorHandler) {
+                return call_user_func($this->errorHandler, $e, $this->request);
+            }
+            return Response::serverError("Server error: " . $e->getMessage());
         }
     }
 }
