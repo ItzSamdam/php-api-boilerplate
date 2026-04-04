@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 // Define the root directory
 define('ROOT_DIR', __DIR__);
 

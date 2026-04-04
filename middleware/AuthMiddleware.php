@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
+
 namespace Middleware;
 
 use Firebase\JWT\JWT;

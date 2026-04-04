@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 use Controllers\UserController;
 use Controllers\ProductController;
 use Controllers\DefaultController;

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 
 function registerResourceRoutes($router, $basePath, $controller, $middlewares = []) {
     $router->get($basePath, [$controller, 'index']);

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 namespace Config;
 
 // Load Composer's autoloader (needed for phpdotenv)

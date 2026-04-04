@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 namespace Routes;
 
 require_once __DIR__ . '/../Utils/Response.php';

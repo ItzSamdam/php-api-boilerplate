@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 require_once __DIR__ . '/vendor/autoload.php'; // Load Composer autoload
 require_once __DIR__ . '/Middleware/CorsMiddleware.php';
 require_once __DIR__ . '/Utils/Request.php';

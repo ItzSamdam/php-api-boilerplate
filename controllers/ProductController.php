@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
+
 namespace Controllers;
 
 use Utils\Request;

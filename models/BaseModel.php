@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright © 2025 Samuel Owadayo. All rights reserved.
+ */
+
 require_once __DIR__ . '/../config/Database.php';
 
 abstract class BaseModel
