@@ -49,3 +49,10 @@ abstract class BaseSeeder
             ($failed ? ", {$failed} failed" : "") . "." . PHP_EOL;
     }
 }
+
+
+# Seed 20 of each (default)
+// php database/seeders/DatabaseSeeder.php
+
+# Seed 100 of each
+// php database/seeders/DatabaseSeeder.php --count=100
