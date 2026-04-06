@@ -88,19 +88,19 @@ class Config
     // -------------------------
     public static function getDbHost()
     {
-        return self::$env['DB_HOST'] ?? 'localhost';
+        return self::$env['DB_HOST'];
     }
     public static function getDbName()
     {
-        return self::$env['DB_NAME'] ?? 'api_db';
+        return self::$env['DB_NAME'];
     }
     public static function getDbUser()
     {
-        return self::$env['DB_USER'] ?? 'root';
+        return self::$env['DB_USER'];
     }
     public static function getDbPass()
     {
-        return self::$env['DB_PASS'] ?? '';
+        return self::$env['DB_PASS'];
     }
 
     // -------------------------

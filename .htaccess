@@ -1,9 +1,3 @@
-/**
- * .htaccess - Redirect all requests to index.php
- */
-// .htaccess
-
-
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

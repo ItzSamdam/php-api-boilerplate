@@ -28,6 +28,7 @@ api/
 │   ├── UserController.php  # Handles user-related endpoints
 │   └── ProductController.php
 ├── models/
+│   ├── BaseModel.php       # Base model for all models
 │   ├── User.php            # User data model
 │   └── Product.php
 ├── services/

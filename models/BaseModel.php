@@ -165,6 +165,35 @@ abstract class BaseModel
         return $stmt->execute();
     }
 
+
+    public function createSeeder(array $data): bool
+    {
+        $now = date('Y-m-d H:i:s');
+
+        // 1. Filter to only fillable fields first
+        $data = array_intersect_key($data, array_flip($this->fillable));
+
+        // 2. Then append timestamps
+        $data['created_at'] = $now;
+        $data['updated_at'] = $now;
+
+        // 3. Build column list and named placeholders from the same $data keys
+        $columns      = implode(', ', array_keys($data));
+        $placeholders = implode(', ', array_map(fn($col) => ":{$col}", array_keys($data)));
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})"
+        );
+
+        // 4. Bind each named placeholder from $data
+        foreach ($data as $col => $value) {
+            $stmt->bindValue(":{$col}", $value);
+        }
+
+        return $stmt->execute();
+    }
+
+
     // --- Relationship Helpers ---
     protected function hasMany($relatedClass, $foreignKey, $localKey = 'id')
     {
