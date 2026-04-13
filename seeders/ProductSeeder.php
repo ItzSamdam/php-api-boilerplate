@@ -13,7 +13,7 @@ class ProductSeeder extends BaseSeeder
      * Predefined categories to pick from.
      * Swap these out for real category IDs from your DB if needed.
      */
-    private array $categoryIds = [1, 2, 3, 4, 5];
+    // private array $categoryIds = [1, 2, 3, 4, 5];
 
     public function run(): void
     {

@@ -18,19 +18,20 @@ $router->get('/', [DefaultController::class, 'index']);
 $router->get($routerPath, [DefaultController::class, 'index']);
 
 // Resource routes
-registerResourceRoutes($router, $routerPath . '/users', UserController::class, [AuthMiddleware::class]);
-registerResourceRoutes($router, $routerPath . '/products', ProductController::class, [AuthMiddleware::class]);
+registerResourceRoutes($router, "{$routerPath}/users", UserController::class, [AuthMiddleware::class]);
+registerResourceRoutes($router, "{$routerPath}/products", ProductController::class, [AuthMiddleware::class]);
 
 // Authentication routes (special cases)
-$router->post($routerPath . '/login', [UserController::class, 'login']);
-$router->post($routerPath . '/register', [UserController::class, 'register']);
+$router->post("{$routerPath}/login", [UserController::class, 'login']);
+$router->post("{$routerPath}/register", [UserController::class, 'register']);
 
 
 // At the very bottom of your route file
-$router->setNotFoundHandler(function ($request) {
-    return Response::notFound("The requested endpoint/resource does not exist");
-});
+$router->setNotFoundHandler(
+    fn($request) => Response::notFound("The requested endpoint/resource does not exist")
+);
 
-$router->setErrorHandler(function ($exception, $request) {
-    return Response::serverError("Unexpected server error: " . $exception->getMessage());
-});
+$router->setErrorHandler(
+    fn($exception, $request) => Response::serverError("Unexpected server error: " . $exception->getMessage())
+);
+
